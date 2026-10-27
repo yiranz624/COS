@@ -1,0 +1,4 @@
+model: deepseek-v4-flash
+provider: deepseek
+summary_model: deepseek-v4-flash
+summary_provider: deepseek

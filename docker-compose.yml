@@ -1,0 +1,23 @@
+services:
+  runtime:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # BuildKit's default DNS namespace cannot reliably resolve PyPI on
+      # this HPC host. Reuse the host network, as runtime containers already
+      # do below, so uv can fetch isolated build requirements such as hatchling.
+      network: host
+    image: "${AGENT_HARNESS_IMAGE:-agent-harness:local}"
+    init: true
+    network_mode: host
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      REACT_BASE_MODEL_CONFIG: "${REACT_BASE_MODEL_CONFIG:-gpt_5_mini.yaml}"
+    user: "${DOCKER_UID:-1000}:${DOCKER_GID:-1000}"
+    volumes:
+      - ./benchmarks/datasets:/app/benchmarks/datasets:ro
+      - ./results/${AGENT_HARNESS_USER_SLUG:-local}:/app/results
+      - ./logs/${AGENT_HARNESS_USER_SLUG:-local}:/app/logs
+      - ./data/${AGENT_HARNESS_USER_SLUG:-local}:/app/data

@@ -1,0 +1,10 @@
+profile_id: deepseek_v4_flash_official
+default_model: deepseek-v4-flash
+roles:
+  decomposer: deepseek-v4-flash
+  researcher: deepseek-v4-flash
+  solver: deepseek-v4-flash
+  verifier: deepseek-v4-flash
+  synthesizer: deepseek-v4-flash
+  evolution_judge: deepseek-v4-flash
+  evidence_storesubagent: deepseek-v4-flash

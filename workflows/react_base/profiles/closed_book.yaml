@@ -1,0 +1,16 @@
+# Closed-book single-agent evaluation profile.
+#
+# No tools are exposed to the model. REACT_BASE_MODEL_CONFIG still selects
+# the model descriptor, exactly as it does for other behavior profiles.
+
+agent:
+  allowed_tools: []
+  main_max_turns: 25
+  keep_tool_result: 0
+  budget_tokens: 8192
+  llm_timeout_s: 120
+  max_input_tokens: 32768
+  thinking_in_history: true
+
+llm:
+  max_tokens: 2048

@@ -1,0 +1,19 @@
+COS — Code as Orchestration
+
+This distribution is based on the supplied AgentHarness-rolechange-v6 source
+archive. The archive identifies AgentHarness as the evaluation harness for
+Apodex-1.0. Its Apache License, Version 2.0 is retained in LICENSE.
+Original source notices in individual files are retained.
+
+Release packaging changes:
+- Replace the mixed upstream/research homepage with COS documentation.
+- Add English and Chinese setup and reproducibility instructions.
+- Exclude local analysis, baseline/environment snapshots, complete execution
+  traces, and the standalone benchmark data file.
+- Replace historical test-fixture prose and source URLs with synthetic examples,
+  preserving the fact-reference repair structure.
+- Replace the Docker image's personal account name with a generic cos account.
+- Add cross-platform line-ending rules and local-secret ignore rules.
+
+The Python package and legacy strategy/role identifiers remain unchanged for
+compatibility. Benchmark datasets and third-party services have their own terms.

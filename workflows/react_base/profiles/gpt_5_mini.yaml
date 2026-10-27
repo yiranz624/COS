@@ -1,0 +1,4 @@
+model: gpt-5-mini
+provider: openai
+summary_model: gpt-5-mini
+summary_provider: openai

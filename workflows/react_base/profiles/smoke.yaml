@@ -1,0 +1,15 @@
+# Low-cost behavior profile for one-question API and agent-loop checks.
+# The selected model still comes from REACT_BASE_MODEL_CONFIG.
+
+agent:
+  main_max_turns: 25
+  keep_tool_result: 3
+  budget_tokens: 20000
+  tool_result_max_chars: 20000
+  tool_timeout_s: 120
+  llm_timeout_s: 120
+  max_input_tokens: 32768
+  thinking_in_history: true
+
+llm:
+  max_tokens: 2048

@@ -1,0 +1,4 @@
+model: deepseek-v4-flash
+provider: openai
+summary_model: deepseek-v4-flash
+summary_provider: openai

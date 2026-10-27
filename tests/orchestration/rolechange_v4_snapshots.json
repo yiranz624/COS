@@ -1,0 +1,28 @@
+{
+  "agent_harness/orchestration/roles.py": {
+    "DECOMPOSER_ROLE": "2aa7a054e3a1fac5bafb0d4f3713c9a744fb8459d896470d96952b5e457cb06a",
+    "RESEARCHER_ROLE": "cadfe7da290c4ec4eff2bd71e1a304ea6b6faacb0037669256525796470b13a8",
+    "SOLVER_ROLE": "b88cd1d3e13961192129a2f5123d08b120f4e6911a7e162bc7e16f2dbb69333a",
+    "VERIFIER_ROLE": "ed79301299f7117859a29b8db17012243f3a62deae20f5bc2c18c95837b0a9f1",
+    "SYNTHESIZER_ROLE": "0f1c01a36ece36496b5e05652952c45be5eb40f4f77d459a83415bbffa1b0064"
+  },
+  "agent_harness/orchestration/evolution_roles.py": {
+    "EVOLUTION_JUDGE_ROLE": "29b868ab5f6e9c5b78ef2d27f0d2a48df6ca6ef1110aa6ada38cf6372b8e5911",
+    "EVOLUTION_JUDGE_V4_POLICY": "df93833d9ada413aa55d5fb4997aa7f5ff833f26e68b41f35c84227afdec6ca1",
+    "evolution_judge_v4": "d22d7d3990209d1bcedc6fbfc4c1877cf88116f4566d7ed7d36f453a445f8532"
+  },
+  "agent_harness/orchestration/evidence_store.py": {
+    "EVIDENCE_ROLE": "264c1b6dd059e88cd10a03ec2a1d44de41c44906a6d330bfb51bb278559c8603"
+  },
+  "agent_harness/orchestration/evidence_judge.py": {
+    "LOCAL_JUDGE_PROMPT": "f00d3c572c727e7f9786d1b9dee5b0377241fe0b3448bc2d3a250f29438e7e29",
+    "FINAL_ROUND_POLICY": "ab1f5024375b249791a0c4e01104ed1f0ac73df0176fae45d02e9ead4a5b8411",
+    "local_judge_role": "2e9a4af69b81c40d684b52cdf854862f79793ae309594b90c384b51695e61b79",
+    "REPORT_JUDGE_PROMPT": "c275429cf3c535cf1e3eac971423b7f9cfbe61091b2e553ba08c8fad5ab67990",
+    "MAX_ROLECHANGE_EVOLUTION_ROUNDS": "0b5584281c3bc8c824536db7bdde18f20987e778f7cb14d0b92b0af322a5da11"
+  },
+  "agent_harness/orchestration/compact_facts.py": {
+    "WORKER_FACT_SCHEMA": "7b122c5eff42cad8c0cf57a85b0effcbbbc33d57e22dd0abc86c964eeaba3b9d",
+    "WORKER_FACT_PROMPT": "7b6b5ec68a7af53348bac28da88b2bd40feb1deb9aa1b7b677b044da4b77bc3b"
+  }
+}
