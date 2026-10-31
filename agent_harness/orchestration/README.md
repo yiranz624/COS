@@ -21,10 +21,10 @@ The runtime executes imported, trusted async functions. The benchmark's
 ``solve(ctx)`` only after restricted-AST validation and fake-context preflight.
 That source receives minimal builtins and is registered only in the current
 worker process. If no generated program passes validation and review, or the
-program raises during execution, the task is recorded as failed. No fixed script
-such as ``reference_v6`` runs in its place. Under ``rolechange_self_evolving_v6``,
-the same failures end only the current round, and the next round regenerates the
-program until the round cap is reached.
+program raises during execution, the task is recorded as failed, and no other
+script runs in its place. Under ``rolechange_self_evolving_v6``, the same
+failures end only the current round, and the next round regenerates the program
+until the round cap is reached.
 The runtime itself never accepts arbitrary unvalidated Python source.
 
 ## Quick start
