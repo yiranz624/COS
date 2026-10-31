@@ -117,7 +117,8 @@ class SubmissionTests(unittest.IsolatedAsyncioTestCase):
     async def test_concurrent_writes_are_serialized_and_visible(self):
         with tempfile.TemporaryDirectory() as tmp:
             store = EvidenceStore(Path(tmp) / "facts.json")
-            llm = SubmissionLLM(); llm.per_job_claim = True
+            llm = SubmissionLLM()
+            llm.per_job_claim = True
             await self.run_workers(store, llm, ["researcher"] * 4, parallel=True)
             self.assertEqual(store.snapshot()["revision"], 4)
             self.assertEqual(len(store.snapshot()["facts"]), 4)
@@ -186,7 +187,8 @@ class SubmissionTests(unittest.IsolatedAsyncioTestCase):
     async def test_merged_claim_requires_and_updates_summary(self):
         with tempfile.TemporaryDirectory() as tmp:
             store = EvidenceStore(Path(tmp) / "facts.json")
-            seed = add("Observation with earlier detail"); seed["summary"] = "Original summary"
+            seed = add("Observation with earlier detail")
+            seed["summary"] = "Original summary"
             commit(store, [seed])
             fid = store.snapshot()["facts"][0]["id"]
             def merge(payload):
@@ -268,9 +270,11 @@ class DirectoryTests(unittest.IsolatedAsyncioTestCase):
     async def test_legacy_load_is_read_only_and_uses_claim_summary(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "facts.json"
-            store = EvidenceStore(path); commit(store, [add("Old claim")])
+            store = EvidenceStore(path)
+            commit(store, [add("Old claim")])
             legacy = store.snapshot()
-            legacy.pop("fact_index"); legacy.pop("submissions")
+            legacy.pop("fact_index")
+            legacy.pop("submissions")
             legacy["schema_version"] = "evidence_store_v2"
             path.write_text(json.dumps(legacy))
             before = path.read_bytes()

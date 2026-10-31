@@ -383,7 +383,8 @@ class EvidenceIntegrationTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_concurrent_maintenance_serializes_snapshot_and_commit(self):
         from tests.orchestration.test_fact_submission import SubmissionLLM
-        llm = SubmissionLLM(); llm.per_job_claim = True
+        llm = SubmissionLLM()
+        llm.per_job_claim = True
         with tempfile.TemporaryDirectory() as tmp:
             store = EvidenceStore(Path(tmp) / "facts.json")
             async with OfflineSession(llm):

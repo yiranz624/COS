@@ -52,7 +52,8 @@ def report_schema(report: dict, round_number: int) -> dict:
 def normalize_reflection(report: dict, raw: dict | None, *, round_number: int,
                          scope=None, snapshot=None, error="") -> dict:
     raw = raw if isinstance(raw, dict) and not error else {}
-    strings = lambda value: [x for x in value[:20] if isinstance(x, str)] if isinstance(value, list) else []
+    def strings(value):
+        return [x for x in value[:20] if isinstance(x, str)] if isinstance(value, list) else []
     fact_ids = {f["id"] for f in (snapshot or {}).get("facts", [])}
     invalid = []
 
