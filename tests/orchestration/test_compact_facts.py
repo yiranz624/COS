@@ -134,7 +134,8 @@ class ExplicitSubmissionIntegrationTests(unittest.IsolatedAsyncioTestCase):
                 if messages[0]["content"].startswith(EVIDENCE_ROLE.system_prompt):
                     raise AssertionError("Empty table must skip maintenance")
                 return await super().chat(messages, **kwargs)
-        llm = NoFactsLLM(); llm.submit_facts = False
+        llm = NoFactsLLM()
+        llm.submit_facts = False
         with tempfile.TemporaryDirectory() as tmp:
             _, manifest, _ = await self.run_case(Path(tmp), llm)
             self.assertTrue(manifest["accepted"])
@@ -142,7 +143,8 @@ class ExplicitSubmissionIntegrationTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(manifest["rounds"][0]["evidence_maintenance"]["result"]["skipped"])
 
     async def test_prose_and_proposal_facts_are_not_imported(self):
-        llm = ScriptedLLM(); llm.submit_facts = False
+        llm = ScriptedLLM()
+        llm.submit_facts = False
         llm.source = llm.source.replace('"facts": []',
             '\"facts\": [{\"claim\": \"Unsubmitted assertion\", \"source_urls\": [], \"evidence_excerpt\": \"text\"}]')
         with tempfile.TemporaryDirectory() as tmp:

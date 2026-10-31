@@ -37,7 +37,6 @@ _ALLOWLIST = {
     "reference_v3": "orchestrations.reference_v3",
     "reference_v4": "orchestrations.reference_v4",
     "reference_v5": "orchestrations.reference_v5",
-    "reference_v6": "orchestrations.reference_v6",
     "reference_v7": "orchestrations.reference_v7",
 }
 

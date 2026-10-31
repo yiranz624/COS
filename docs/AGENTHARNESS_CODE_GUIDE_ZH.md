@@ -18,7 +18,7 @@
 
 该策略不会让模型修改整个工程。第一阶段 Planner 的输入固定为原始问题、角色与工具清单、预算与
 允许的 `ctx` API，输出只能是自然语言总计划，不能包含 Python、伪代码或候选答案。第二阶段把该
-计划、环境能力、`reference_v6` 和任务定制示例的自包含精简模板交给代码 Orchestrator，输出只能是一份
+计划、环境能力和 `ctx` API 文档与用法示例交给代码 Orchestrator，不提供完整的 `solve` 模板，输出只能是一份
 `async def solve(ctx)` 源码。所有代码修复轮次继续引用同一份自然语言计划。
 
 运行时 final verifier 的拒绝结论具有流程控制权：`accepted=false` 时，Orchestrator 必须把原始
@@ -30,7 +30,7 @@ researcher 结果、critique 与 failed criteria 交回 solver 重新生成候�
 生成链依次保存请求、生成并持久化自然语言总计划、依据计划生成代码、执行 AST 白名单校验、使用 Fake Context 预执行、计算源码
 哈希、进行当前进程内注册，最后由 `ScriptRuntime` 执行。代码无效时最多修复三次；Planner 调用
 失败、修复耗尽或生成代码运行异常时直接将该题标记为失败。Planner 和修复尝试的工件仍会保留，
-不会用 `reference_v6` 或 `reference_v7` 的结果替代自主生成结果。
+不会用任何参考脚本的结果替代自主生成结果。
 
 受限代码支持条件、异常处理、普通 `for` 循环和 `ctx.call/spawn/gather/parallel/map/cancel/
 checkpoint/load_checkpoint/remaining_budget/emit`。禁止 import、文件与进程访问、反射、动态代码

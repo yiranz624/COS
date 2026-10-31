@@ -249,44 +249,6 @@ Fetch 的候选URL同时被 Verifier 标记为 verified，且全部必需 C 编�
 Agent LLM Token 也已纳入预算，但 Fetch 内部摘要 Token 暂未进入总 Token。这不影响
 流程正确性测试，正式质量—成本比较前必须补齐。
 
-## Reference v6：高准确率状态化对抗循环
-
-`reference_v6` 冻结 v1–v5，不再修改历史脚本。它保留三阶段宏观结构，并针对真实
-Trace 暴露的通用漏洞增加以下机制：
-
-- `plan_reviewer` 使用 AI 做计划语义审查，拒绝遗漏原题条件、擅自增加穷举数量、
-  重复完整任务和不必要阻塞；至多让 Decomposer 按 critique 重写一次。
-- `stateful_solver` 在工具循环后返回结构化研究增量：已执行查询、观察、候选、URL
-  证据、排除候选、未解决标准和 solution。
-- 每个 DAG 节点先保证执行一轮，再开始任何节点的 revision，避免首个 hard 节点
-  独占全部资源。
-- 下一轮禁止重复已记录查询，并同时接收上一轮 solution、Verifier critique、候选、
-  证据、排除原因和依赖节点的压缩状态。
-- 上游 `incomplete` 只是线索，不是下游执行许可；下游必须自行补全相关缺口。
-- easy/medium/hard 默认最多2/4/6轮；accepted 提前结束，连续两轮无实质信息增益也
-  停止。候选、证据、排除项或未解决标准变化才算信息增益，单纯增加查询数不算。
-- 上游状态改变后，依赖签名变化会让已完成后继重新进入验证。
-- Synthesizer 只接收各节点压缩状态，完整历史继续保存在 Trace，避免轮数增加导致
-  最终上下文无限膨胀。
-
-V6 是 accuracy-first 实验脚本，可以通过提高总 Token、Job、工具和墙钟限制允许模型
-扩大研究，但不建议把轮数直接设为100；默认6轮配合状态去重和信息增益停止更可控。
-
-高准确率一题 smoke：
-
-```bash
-./scripts/docker.sh run python -m benchmarks.runner.run_subprocess \
-  --benchmark browsecomp_zh \
-  --strategy code_orchestration \
-  --orchestration-script reference_v6 \
-  --orchestration-profile deepseek_v4_flash \
-  --max-tokens 300000 --max-tool-calls 300 \
-  --max-jobs 64 --max-parallel-jobs 4 --wall-time-seconds 7200 \
-  --limit 1 --no-shuffle --concurrency 1 \
-  --scoring exact_match \
-  --out results/reference_v6_accuracy_smoke_1
-```
-
 真实一题 smoke：
 
 ```bash

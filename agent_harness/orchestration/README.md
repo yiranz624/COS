@@ -19,8 +19,12 @@ to stop. Roles own their prompts, tools, model routing, and output contracts.
 The runtime executes imported, trusted async functions. The benchmark's
 ``generated_code_orchestration`` strategy may additionally compile a per-task
 ``solve(ctx)`` only after restricted-AST validation and fake-context preflight.
-That source receives minimal builtins, is registered only in the current worker
-process, and falls back to ``reference_v6`` on validation or execution failure.
+That source receives minimal builtins and is registered only in the current
+worker process. If no generated program passes validation and review, or the
+program raises during execution, the task is recorded as failed, and no other
+script runs in its place. Under ``rolechange_self_evolving_v6``, the same
+failures end only the current round, and the next round regenerates the program
+until the round cap is reached.
 The runtime itself never accepts arbitrary unvalidated Python source.
 
 ## Quick start
