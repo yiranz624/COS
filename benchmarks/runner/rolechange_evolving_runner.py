@@ -97,7 +97,6 @@ async def run_self_evolving_strategy(
     flow_ledger = FactFlowLedger(generated_root, trace_store.attempt_id) if flow_mode != "off" else None
     previous_snapshot = {"facts": [], "revision": 0}
     config = get_config()
-    history_enabled = True
     evidence_store = EvidenceStore(generated_root / "evidence_store.json")
     facts: list[dict[str, Any]] = []
     trace_history: list[dict[str, Any]] = []
@@ -875,7 +874,6 @@ async def run_self_evolving_strategy(
     manifest_document = {
         "schema_version": "self_evolving_orchestration_v6_flow_slice_v1" if is_v6 else "self_evolving_orchestration_v5_reflector_v1" if is_v5 else "self_evolving_orchestration_v4_evidence_v3",
         "fact_flow_mode": flow_mode,
-        "stagnation_relaxation_enabled": history_enabled,
         "strategy": strategy,
         "question_id": question_id,
         "max_rounds": MAX_ROLECHANGE_EVOLUTION_ROUNDS,
@@ -961,7 +959,6 @@ async def run_self_evolving_strategy(
             ),
             "round_count": completed_rounds,
             "fact_flow_mode": flow_mode,
-        "stagnation_relaxation_enabled": history_enabled,
         },
         **({
             "_terminal_error": terminal_error,

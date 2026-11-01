@@ -69,14 +69,6 @@ def local_judge_role(round_number: int, *, stage: str = "assessment", reflector:
             "constraints": {"type": "array", "items": constraint}, "issues": strings,
         }
         prompt = LOCAL_JUDGE_PROMPT
-        if round_number >= 3:
-            prompt += (
-                "\n\nV4 persistent relaxed review, round 3 only: judge the current candidate "
-                "using the same frozen facts. Distinguish minor uncertainty from material gaps; "
-                "do not invent support. The runner still enforces verifier eligibility. "
-                "If approval is unsupported, return evolve; the separate report stage must "
-                "choose a best-effort answer from the current candidate and accumulated facts."
-            )
     else:
         report = copy.deepcopy(EVOLUTION_JUDGE_ROLE.result_schema["properties"]["failure_report"]["anyOf"][1])
         for field in FACT_REPORT_FIELDS:

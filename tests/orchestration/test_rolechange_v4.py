@@ -336,7 +336,7 @@ class FusionIntegrationTests(unittest.IsolatedAsyncioTestCase):
             trace = json.loads((path / "generated/evolution_round_01/terminal_review/structured_trace.json").read_text())
             self.assertTrue(trace["worker_evidence"])
 
-    async def test_fresh_generation_same_source_allowed_and_round_three_policy(self):
+    async def test_fresh_generation_same_source_allowed(self):
         llm = ScriptedLLM(("evolve", "evolve", "approve_synthesis"))
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp)
@@ -354,18 +354,17 @@ class FusionIntegrationTests(unittest.IsolatedAsyncioTestCase):
                     self.assertNotIn("First ask the decomposer", prompt)
             for round_number, prompt in enumerate(llm.judge_prompts, 1):
                 self.assertTrue(prompt.startswith(local_judge_role(round_number).system_prompt))
-            self.assertNotIn("V4 persistent relaxed", llm.judge_prompts[1])
-            self.assertIn("V4 persistent relaxed", llm.judge_prompts[2])
+            self.assertEqual(local_judge_role(3).system_prompt, local_judge_role(1).system_prompt)
             self.assertFalse(list(path.glob("generated/evolution_round_*/checkpoint.json")))
 
-    async def test_generation_failure_does_not_reset_round_three_policy(self):
+    async def test_generation_failure_still_reaches_round_three(self):
         llm = ScriptedLLM(("evolve", "evolve", "approve_synthesis"), generation_failures=(1,))
         with tempfile.TemporaryDirectory() as tmp:
             _, manifest, _ = await self.run_case(Path(tmp), llm)
             self.assertEqual(manifest["rounds"][0]["status"], "generation_failed")
             self.assertTrue(manifest["accepted"], manifest["last_failure_report"])
             self.assertEqual(manifest["completed_rounds"], 3)
-            self.assertIn("V4 persistent relaxed", llm.judge_prompts[-1])
+            self.assertTrue(llm.judge_prompts[-1].startswith(local_judge_role(3).system_prompt))
 
     async def test_execution_judge_and_synthesis_failures_start_fresh_rounds(self):
         for role, key in (("researcher", "research"), ("evolution_judge", "terminal:evolution_judge"), ("synthesizer", "terminal:synthesizer")):
